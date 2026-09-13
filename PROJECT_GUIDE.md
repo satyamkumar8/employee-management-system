@@ -1,4 +1,4 @@
-# EMS - Project Guide & Interview Notes
+# EMS - Project Guide
 
 Welcome to the **Employee Management System (MERN)** guide. This document serves as a complete functional overview for recruiters to test the platform and provides deep-dive architectural notes for technical interviews.
 
@@ -71,32 +71,3 @@ The database is heavily relational by reference:
 
 ---
 
-## 4. Interview Explanation Notes
-
-Use these notes to explain your technical decisions during interviews.
-
-### Why MERN Stack?
-> "I chose the MERN stack because JavaScript/JSON flows seamlessly from the MongoDB database through the Express backend directly to the React frontend. It reduces context switching between languages and allows for highly scalable, non-blocking asynchronous REST APIs."
-
-### How does JWT Authentication work?
-> "When a user logs in, the server verifies their bcrypt-hashed password and generates a stateless JSON Web Token (JWT) signed with a secret key. This token contains their User ID and Role. The React frontend stores this token in `localStorage` and automatically attaches it as a `Bearer` token in the `Authorization` header of every subsequent Axios request. The backend middleware intercepts these requests, verifies the token signature, and either grants access or rejects the request with a 401 Unauthorized error."
-
-### How is Role-Based Access Control (RBAC) implemented?
-> "On the backend, my JWT middleware injects the decoded user payload into the `req` object. API routes check `req.user.role`. If an Employee tries to access an Admin-only route (like creating a user or generating a payslip), the backend explicitly blocks them. On the frontend, React Router heavily utilizes the `AuthContext` to conditionally render Sidebar tabs and protect URL routes based on the logged-in user's role."
-
-### Why Vercel + Render? Why not host them together?
-> "I chose a decoupled microservice-style deployment. Vercel is specifically optimized for serving static React/Vite assets via a global CDN with incredibly fast load times. Render is optimized for long-running Node.js processes. By decoupling them, they scale independently. If the frontend receives heavy traffic, Vercel scales it instantly without putting unnecessary load on the Node backend."
-
-### How do Background Cron Jobs work?
-> "I integrated **Inngest** to handle background jobs reliably. Instead of relying on a fragile `setInterval` inside Node.js that gets wiped out when Render spins down the server, Inngest triggers a webhook on my Express server exactly at 23:59 every day. This trigger executes a function that queries all active employees, checks who lacks an attendance record for the day, and automatically marks them as 'Absent'."
-
-### How does PDF Generation work?
-> "Instead of overloading the Node.js backend with heavy PDF generation libraries like `pdfkit`, I utilized `html2pdf.js` on the frontend. When the user clicks download, React renders a visually stunning HTML template hidden off-screen, captures it as a high-quality canvas, and triggers a local file download. This drastically reduces backend server costs and API latency."
-
----
-
-## 5. Future Improvements
-If this project were to be scaled further, I would implement:
-- **Redis Caching**: To cache dashboard statistics and reduce MongoDB read loads.
-- **AWS S3**: To allow employees to upload profile pictures or medical documents for sick leaves.
-- **WebSockets (Socket.io)**: To send real-time push notifications to employees when their leave request is approved, instead of requiring a page refresh.
