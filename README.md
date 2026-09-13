@@ -1,86 +1,35 @@
 # Employee Management System
 
-A full-stack **Employee Management System (EMS)** built with the MERN stack, providing role-based employee management, attendance tracking, leave workflows, dashboards, and dynamic payslip generation.
+A full-stack **Employee Management System (EMS)** built using the MERN stack to manage employee records, attendance, leave workflows, payroll information, authentication, and administrative operations through a role-based web application.
 
-The application is designed around an enterprise-style **admin-provisioned account model**, where employees are created by an administrator rather than registering themselves.
+The project is designed around a realistic enterprise workflow in which employee accounts are provisioned by an administrator instead of allowing unrestricted public registration.
 
-## 🚀 Live Demo
+---
 
-**Frontend:**  
+## 🚀 Live Application
+
+### Frontend
 https://employee-management-system-ten-delta.vercel.app/
 
-**Backend API:**  
+### Backend API
 https://employee-management-api-le4u.onrender.com
 
 
 ---
 
-## 📌 Key Features
+# 📌 Project Overview
 
-### Admin
+Employee management applications involve several connected workflows such as employee onboarding, attendance, leave management, payroll and administrative approval.
 
-- Secure administrator login
-- Employee provisioning and management
-- Employee profile management
-- Attendance monitoring
-- Leave request approval/rejection
-- Dashboard statistics
-- Payslip generation
-- Role-based access control
+This project brings those workflows into a single full-stack platform with separate interfaces for **Administrators** and **Employees**.
 
-### Employee
-
-- Secure login
-- Personal dashboard
-- Attendance marking
-- Leave application
-- Leave-status tracking
-- Profile information
-- Payslip viewing/download
-
-### System Features
-
-- JWT-based authentication
-- Role-based authorization
-- Password hashing with bcrypt
-- Protected API routes
-- Protected frontend routes
-- Automated attendance processing
-- PDF payslip generation
-- RESTful API architecture
-- Responsive UI
-
----
-
-## 🏗️ Architecture
+The application follows a client-server architecture:
 
 ```text
-                    ┌──────────────────────┐
-                    │      React App       │
-                    │   Vite + Tailwind    │
-                    └──────────┬───────────┘
-                               │
-                         Axios / REST API
-                               │
-                               ▼
-                    ┌──────────────────────┐
-                    │   Node.js + Express  │
-                    │       Backend        │
-                    └──────────┬───────────┘
-                               │
-                ┌──────────────┼───────────────┐
-                │              │               │
-                ▼              ▼               ▼
-          Authentication   Business Logic   Background Jobs
-           JWT + bcrypt     REST Routes       Inngest
-                │              │
-                └──────────────┼───────────────┘
-                               ▼
-                    ┌──────────────────────┐
-                    │      MongoDB Atlas   │
-                    │       Database       │
-                    └──────────────────────┘
-
-Frontend Deployment → Vercel
-Backend Deployment  → Render
-Database            → MongoDB Atlas
+React Frontend
+      ↓
+Axios / REST API
+      ↓
+Node.js + Express Backend
+      ↓
+MongoDB Atlas
